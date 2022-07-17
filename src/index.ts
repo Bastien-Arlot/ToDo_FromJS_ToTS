@@ -2,9 +2,9 @@ import "./style.css";
 
 const ul = document.querySelector("ul");
 const form = document.querySelector("form");
-const input = document.querySelector("form > input");
+const input = document.querySelector<HTMLInputElement>("form > input");
 
-form.addEventListener("submit", event => {
+form.addEventListener("submit", (event) => {
   event.preventDefault();
   const value = input.value;
   input.value = "";
@@ -15,13 +15,13 @@ const todos = [
   {
     text: "je suis une todo",
     done: false,
-    editMode: true
+    editMode: true,
   },
   {
     text: "faire du JavaScript",
     done: true,
-    editMode: false
-  }
+    editMode: false,
+  },
 ];
 
 const displayTodo = () => {
@@ -42,11 +42,11 @@ const createTodoElement = (todo, index) => {
   buttonDelete.innerHTML = "Supprimer";
   const buttonEdit = document.createElement("button");
   buttonEdit.innerHTML = "Edit";
-  buttonDelete.addEventListener("click", event => {
+  buttonDelete.addEventListener("click", (event) => {
     event.stopPropagation();
     deleteTodo(index);
   });
-  buttonEdit.addEventListener("click", event => {
+  buttonEdit.addEventListener("click", (event) => {
     event.stopPropagation();
     toggleEditMode(index);
   });
@@ -54,7 +54,7 @@ const createTodoElement = (todo, index) => {
     <span class="todo ${todo.done ? "done" : ""}"></span>
     <p>${todo.text}</p>
   `;
-  li.addEventListener("click", event => {
+  li.addEventListener("click", (event) => {
     toggleTodo(index);
   });
   li.append(buttonEdit, buttonDelete);
@@ -70,36 +70,37 @@ const createTodoEditElement = (todo, index) => {
   buttonSave.innerHTML = "Save";
   const buttonCancel = document.createElement("button");
   buttonCancel.innerHTML = "Cancel";
-  buttonCancel.addEventListener("click", event => {
+  buttonCancel.addEventListener("click", (event) => {
     event.stopPropagation();
     toggleEditMode(index);
   });
-  buttonSave.addEventListener("click", event => {
+  buttonSave.addEventListener("click", (event) => {
     editTodo(index, input);
   });
   li.append(input, buttonCancel, buttonSave);
   return li;
 };
 
-const addTodo = text => {
+const addTodo = (text) => {
   todos.push({
     text,
-    done: false
+    done: false,
+    editMode: false,
   });
   displayTodo();
 };
 
-const deleteTodo = index => {
+const deleteTodo = (index) => {
   todos.splice(index, 1);
   displayTodo();
 };
 
-const toggleTodo = index => {
+const toggleTodo = (index) => {
   todos[index].done = !todos[index].done;
   displayTodo();
 };
 
-const toggleEditMode = index => {
+const toggleEditMode = (index) => {
   todos[index].editMode = !todos[index].editMode;
   displayTodo();
 };
